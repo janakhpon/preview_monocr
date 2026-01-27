@@ -17,6 +17,14 @@ Initialize the environment and install dependencies:
 uv sync
 ```
 
+### Updating `monocr`
+
+To force install the latest version of the OCR engine:
+
+```bash
+uv add --force-reinstall monocr
+```
+
 ## Usage
 
 ### 1. Jupyter Notebook
