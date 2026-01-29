@@ -13,20 +13,10 @@ app = Flask(__name__)
 
 # Initialize OCR model
 try:
-    # Monkeypatch for PyTorch 2.6+
-    _original_load = torch.load
-    def _safe_load(*args, **kwargs):
-        if 'weights_only' not in kwargs:
-            kwargs['weights_only'] = False
-        return _original_load(*args, **kwargs)
-    torch.load = _safe_load
-    
     ocr_engine = MonOCR()
-    print("OCR Engine Loaded Successfully")
-    
-    torch.load = _original_load # Restore
+    print("OCR ready")
 except Exception as e:
-    print(f"Failed to load OCR Engine: {e}")
+    print(f"OCR init failed: {e}")
     ocr_engine = None
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf'}
