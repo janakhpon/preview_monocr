@@ -14,7 +14,7 @@ Includes a Jupyter Notebook for visualization and a Flask API for integration.
 Initialize the environment and install dependencies:
 
 ```bash
-uv sync
+uv sync --refresh
 ```
 
 ### Updating `monocr`
