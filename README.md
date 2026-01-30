@@ -1,7 +1,6 @@
 # MonOCR Preview
 
-Demonstration repository for the Mon Language OCR package.
-Includes a Jupyter Notebook for visualization and a Flask API for integration.
+A Demo repo with jupyter notebook and flask api for the Mon Language OCR package.
 
 ## Requirements
 
@@ -58,18 +57,9 @@ uv run api/app.py
   - Input: Form-data `file` (pdf)
   - Output: JSON with text per page
 
-## Structure
-
-```
-.
-├── api/          # Flask application
-├── data/         # Test images and PDFs
-├── notebooks/    # Visualization notebooks
-├── pyproject.toml
-└── README.md
-```
-
 ## Contact
 
 For issues regarding the OCR accuracy, please verify the input image quality first.
 For package issues, refer to the main `monocr` repository.
+
+- [monocr](https://github.com/janakhpon/monocr)
