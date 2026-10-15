@@ -1,10 +1,12 @@
 # MonOCR Preview
 
+This demo is pinned to `monocr` 0.1.17; the current package is on [PyPI](https://pypi.org/project/monocr/).
+
 A Demo repo with jupyter notebook and flask api for the Mon Language OCR package.
 
 ## Requirements
 
-- Python 3.10+
+- Python 3.11+
 - uv (package manager)
 - poppler-utils (for PDF processing)
 
@@ -16,13 +18,10 @@ Initialize the environment and install dependencies:
 uv sync --refresh
 ```
 
-### Updating `monocr`
+### The `monocr` version
 
-To force install the latest version of the OCR engine:
-
-```bash
-uv add --force-reinstall monocr
-```
+`pyproject.toml` pins `monocr==0.1.17`, and `uv sync` installs exactly that.
+Using a newer release means changing the pin.
 
 ## Usage
 
