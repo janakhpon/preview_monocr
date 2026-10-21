@@ -55,6 +55,9 @@ hardened service:
   arbitrary code for anyone who can reach it. Never combine it with `HOST=0.0.0.0`.
 - Uploads are limited to 20 MB (larger ones get HTTP 413), and PDFs to 20 pages
   (longer ones get HTTP 400).
+- PDF pages render at 200 dpi (A4 is 1654 x 2339 px). A page whose longest side
+  would pass 4000 px (20 in) gets HTTP 400, as does a PDF that is corrupt or
+  password-protected. Reading and rendering are cut off after 10 s and 60 s.
 
 **Endpoints:**
 
