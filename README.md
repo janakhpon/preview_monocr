@@ -22,7 +22,7 @@ uv run verify_install.py   # loads the model (downloads it on first run) and pri
 
 ## Notebook
 
-Shows each image or PDF page next to its OCR result.
+Shows each image or PDF page with its OCR result.
 
 ```bash
 uv run jupyter lab notebooks/demo.ipynb
@@ -60,7 +60,7 @@ Limits, set at the top of `api/app.py`:
 
 ## Issues
 
-Poor OCR accuracy is usually the input: check the image quality first. Package issues belong in the
+For poor OCR accuracy, check the input image quality first. Package issues belong in the
 [monocr](https://github.com/janakhpon/monocr) repository.
 
 ## Licence
