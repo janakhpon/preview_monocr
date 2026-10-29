@@ -1,77 +1,68 @@
 # MonOCR Preview
 
-This demo is pinned to `monocr` 0.1.17; the current package is on [PyPI](https://pypi.org/project/monocr/).
+A demo of the [`monocr`](https://github.com/janakhpon/monocr) package for Mon language OCR: a Jupyter
+notebook that shows results on sample images and PDFs, and a small Flask API that returns the text as
+JSON. It is a local demo, not a hardened service, and it has no test suite.
 
-A Demo repo with jupyter notebook and flask api for the Mon Language OCR package.
+The demo is pinned to `monocr==0.1.17` in `pyproject.toml`, and `uv sync` installs exactly that. To try
+a newer release from [PyPI](https://pypi.org/project/monocr/), change the pin.
 
 ## Requirements
 
 - Python 3.11+
-- uv (package manager)
+- [uv](https://docs.astral.sh/uv/)
 - poppler-utils (for PDF processing)
 
 ## Setup
 
-Initialize the environment and install dependencies:
-
 ```bash
 uv sync --refresh
+uv run verify_install.py   # loads the model (downloads it on first run) and prints its device
 ```
 
-### The `monocr` version
+## Notebook
 
-`pyproject.toml` pins `monocr==0.1.17`, and `uv sync` installs exactly that.
-Using a newer release means changing the pin.
-
-## Usage
-
-### 1. Jupyter Notebook
-
-Visualize OCR results on images and PDFs.
+Shows each image or PDF page next to its OCR result.
 
 ```bash
 uv run jupyter lab notebooks/demo.ipynb
 ```
 
-Place your test files in:
+It reads every file in `data/images/` (.png, .jpg, .jpeg) and `data/pdfs/` (.pdf). Samples are
+already there; add your own beside them.
 
-- `data/images/` for .png/.jpg
-- `data/pdfs/` for .pdf
-
-### 2. Flask API
-
-Start the API server:
+## Flask API
 
 ```bash
 uv run api/app.py
+curl -F file=@data/images/000028.jpg http://127.0.0.1:5000/ocr/image
 ```
 
-The server listens on `127.0.0.1:5000` with debug off. It is a local demo, not a
-hardened service:
+| Endpoint | Input | Output |
+| --- | --- | --- |
+| `GET /health` | none | `status` and whether the model loaded |
+| `POST /ocr/image` | form-data `file` (.png, .jpg, .jpeg) | JSON with the detected text |
+| `POST /ocr/pdf` | form-data `file` (.pdf) | JSON with the text per page |
 
-- `HOST=0.0.0.0 uv run api/app.py` exposes it to the network. Do that only on a
-  network you trust.
-- `FLASK_DEBUG=1 uv run api/app.py` turns on the Werkzeug debugger, which runs
-  arbitrary code for anyone who can reach it. Never combine it with `HOST=0.0.0.0`.
-- Uploads are limited to 20 MB (larger ones get HTTP 413), and PDFs to 20 pages
-  (longer ones get HTTP 400).
-- PDF pages render at 200 dpi (A4 is 1654 x 2339 px). A page whose longest side
-  would pass 4000 px (20 in) gets HTTP 400, as does a PDF that is corrupt or
-  password-protected. Reading and rendering are cut off after 10 s and 60 s.
+The server listens on `127.0.0.1:5000` with debug off.
 
-**Endpoints:**
+- `HOST=0.0.0.0 uv run api/app.py` exposes it to the network. Do that only on a network you trust.
+- `FLASK_DEBUG=1 uv run api/app.py` turns on the Werkzeug debugger, which runs arbitrary code for
+  anyone who can reach it. Never combine it with `HOST=0.0.0.0`.
 
-- `POST /ocr/image`
-  - Input: Form-data `file` (image)
-  - Output: JSON with detected text
+Limits, set at the top of `api/app.py`:
 
-- `POST /ocr/pdf`
-  - Input: Form-data `file` (pdf)
-  - Output: JSON with text per page
+- Uploads are limited to 20 MB (larger ones get HTTP 413), and PDFs to 20 pages (longer ones get
+  HTTP 400).
+- PDF pages render at 200 dpi (A4 is 1654 x 2339 px). A page whose longest side would pass 4000 px
+  (20 in) gets HTTP 400, as does a PDF that is corrupt or password-protected. Reading and rendering
+  are cut off after 10 s and 60 s.
 
-## Contact
+## Issues
 
-For issues regarding the OCR accuracy, please verify the input image quality first.
-For package issues, refer to the main `monocr` repository.
+Poor OCR accuracy is usually the input: check the image quality first. Package issues belong in the
+[monocr](https://github.com/janakhpon/monocr) repository.
 
-- [monocr](https://github.com/janakhpon/monocr)
+## Licence
+
+MIT. See [LICENSE](LICENSE).
