@@ -1,6 +1,13 @@
 # MonOCR Preview
 
-This demo is pinned to `monocr` 0.1.17; the current package is on [PyPI](https://pypi.org/project/monocr/).
+> **Superseded, and broken on a fresh install.** This demo is pinned to `monocr`
+> 0.1.17, which downloads `monocr.ckpt` from the main branch of the
+> [janakhpon/monocr](https://huggingface.co/janakhpon/monocr) model repo. That file
+> is no longer there, so on a machine without a cached copy the model fails to
+> load: the notebook prints the init error and the API answers every OCR request
+> with HTTP 500. For Mon OCR today, use the current
+> [`monocr`](https://pypi.org/project/monocr/) package (2.x) or
+> [`monocr-onnx`](https://github.com/MonDevHub/monocr-onnx).
 
 A Demo repo with jupyter notebook and flask api for the Mon Language OCR package.
 
@@ -37,6 +44,10 @@ Place your test files in:
 
 - `data/images/` for .png/.jpg
 - `data/pdfs/` for .pdf
+
+The sample files already there (the images in `data/images/` and
+`data/pdfs/party_mission.pdf`) have no recorded source or licence. The MIT
+licence in this repo covers the code, not them.
 
 ### 2. Flask API
 
